@@ -1,0 +1,10 @@
+----------------------------------------------------------------
+Mon May 27 19:40:18 GMT+01:00 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-013e-e74a-7a71-000000807ed8 
+on database directory C:\Users\Administrador\Documents\NetBeansProjects\Numismatica\DerbyDB\Coleccionator  with class loader sun.misc.Launcher$AppClassLoader@1313e0e 
+Loaded from file:/C:/Users/Administrador/Documents/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_21-b11
+user.dir=C:\Users\Administrador\Documents\NetBeansProjects\Numismatica
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

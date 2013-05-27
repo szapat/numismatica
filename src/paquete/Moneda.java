@@ -10,8 +10,9 @@ package paquete;
  */
 public class Moneda {
     //definicion variables
+    private int id; //identificador unico
     private String name; //nombre de referencia
-    private String year; 
+    private int year; 
     private float value; //valor en su acuñacion
     private float coin;  //moneda nacional
     
@@ -24,8 +25,9 @@ public class Moneda {
     private float dimy;
     
     private int category;
+    private String variant;
     
-    private String country;
+    private int country;
     
     private float price; //precio mercado
     
@@ -34,8 +36,12 @@ public class Moneda {
     private String observations; //observaciones
 
     
+    public Moneda(){
+        
+    }   
     
-    public Moneda(String name, String year, float value, float coin, float weight, String conservation, String material, float dimx, float dimy, int category, String country, float price, String observations) {
+    public Moneda(int id, String name, int year, float value, float coin, float weight, String conservation, String material, float dimx, float dimy, int category, String variant, int country, float price, String type, String observations) {
+        this.id = id;
         this.name = name;
         this.year = year;
         this.value = value;
@@ -46,13 +52,23 @@ public class Moneda {
         this.dimx = dimx;
         this.dimy = dimy;
         this.category = category;
+        this.variant = variant;
         this.country = country;
         this.price = price;
+        this.type = type;
         this.observations = observations;
     }
 
     
     //get y set
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setName(int id) {
+        this.id = id;
+    }
     
     public String getName() {
         return name;
@@ -62,11 +78,11 @@ public class Moneda {
         this.name = name;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
@@ -134,11 +150,19 @@ public class Moneda {
         this.category = category;
     }
 
-    public String getCountry() {
+    public String getVariant() {
+        return variant;
+    }
+
+    public void setVariant(String variant) {
+        this.variant = variant;
+    }
+    
+    public int getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(int country) {
         this.country = country;
     }
 
@@ -166,15 +190,5 @@ public class Moneda {
         this.observations = observations;
     }
     
-    
-    
-    
 
- 
- 
-    
-    
-    
-    
-    
 }
