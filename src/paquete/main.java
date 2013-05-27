@@ -22,7 +22,7 @@ public class main extends javax.swing.JFrame {
 
     public main() {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/hombre.gif")).getImage());
+        //setIconImage(new ImageIcon(getClass().getResource("/imagenes/hombre.gif")).getImage());
 
         setLocationRelativeTo(null);
         MonArray = BDMonedas.selectTable();
@@ -43,6 +43,7 @@ public class main extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         try {
             monedaPanel = new paquete.MonedaPanel();
         } catch (java.sql.SQLException e1) {
@@ -58,15 +59,23 @@ public class main extends javax.swing.JFrame {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(780, 580));
 
+        jLabel1.setText("No me ha dado tiempo a terminarlo, pero sigo en ello.");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 825, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(275, 275, 275)
+                .addComponent(jLabel1)
+                .addContainerGap(294, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 573, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(185, 185, 185)
+                .addComponent(jLabel1)
+                .addContainerGap(374, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Inicio", jPanel1);
@@ -134,6 +143,7 @@ public class main extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
