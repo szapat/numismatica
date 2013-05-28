@@ -4,6 +4,7 @@
  */
 package paquete;
 
+import com.sun.imageio.plugins.common.ImageUtil;
 import database.Database;
 import java.awt.Image;
 import java.sql.SQLException;
@@ -21,12 +22,20 @@ import javax.swing.table.TableColumn;
 public class MonedaPanel extends javax.swing.JPanel {
 
     private DefaultTableModel modeloTabla;
+    ImageIcon icod = new ImageIcon(getClass().getResource("/imagenes/default.jpg"));
+    Icon iconodefault = new ImageIcon(icod.getImage().getScaledInstance(136, 102, Image.SCALE_DEFAULT));
+    ImageIcon icoadd = new ImageIcon(getClass().getResource("/imagenes/addcoin.jpg"));
+    Icon addcoin = new ImageIcon(icoadd.getImage().getScaledInstance(136, 102, Image.SCALE_DEFAULT));
 
     public MonedaPanel() throws SQLException {
         initComponents();
 
+        //imagen default
 
-
+        jimgf.setIcon(iconodefault);
+        jimgr.setIcon(iconodefault);
+        jimgd1.setIcon(iconodefault);
+        jimgd2.setIcon(iconodefault);
     }
 
     public void mostardatos(ArrayList<Moneda> Monedalista) {
@@ -66,8 +75,8 @@ public class MonedaPanel extends javax.swing.JPanel {
         jTable1.removeColumn(tc);
 
         //Mostrar vacíos los datos de contacto
-        jnumtotal.setText(""+ jTable1.getRowCount());
-        showData();        
+        jnumtotal.setText("" + jTable1.getRowCount());
+        showData();
     }
 
     void showData() {
@@ -76,31 +85,78 @@ public class MonedaPanel extends javax.swing.JPanel {
         //Comprobar que el usuario ha seleccionado alguna fila
         if (numFilaSelec != -1) {
             //Obtener el contacto correspondiente a la fila seleccionada
-            Moneda mon =  new Moneda();
+            Moneda mon = new Moneda();
             Database BDMoneda = new Database();
-            int i = Integer.valueOf((String)modeloTabla.getValueAt(numFilaSelec, 0));
+            int i = Integer.valueOf((String) modeloTabla.getValueAt(numFilaSelec, 0));
             boolean ip = BDMoneda.connectDB();
-           mon =  BDMoneda.selectMoneda(i);
-            
-            jLabel9.setText(""+mon.getWeight());
-            jLabel10.setText(""+mon.getConservation());
-            jLabel11.setText(""+mon.getMaterial());      
-            
-            
-            //imagen preview - redimensiona la imagen a un tamaño dado.
-            ImageIcon ico =new ImageIcon(getClass().getResource("/imagenes/m1f.jpg"));
+            mon = BDMoneda.selectMoneda(i);
+
+            jLabel9.setText("" + mon.getWeight());
+            jLabel10.setText("" + mon.getConservation());
+            jLabel11.setText("" + mon.getMaterial());
+
+
+            //imagen preview - redimensiona la imagen a un tamaño dado. 
+            /*
+            ImageIcon ico = new ImageIcon(getClass().getResource("/imagenes/m" + i + "f.jpg"));
             Icon iconof = new ImageIcon(ico.getImage().getScaledInstance(136, 102, Image.SCALE_DEFAULT));
             jimgf.setIcon(iconof);
-            ImageIcon ico2 =new ImageIcon(getClass().getResource("/imagenes/m1f.jpg"));
+            ImageIcon ico2 = new ImageIcon(getClass().getResource("/imagenes/m" + i + "r.jpg"));
             Icon iconor = new ImageIcon(ico2.getImage().getScaledInstance(136, 102, Image.SCALE_DEFAULT));
-            jimgr.setIcon(iconor);
+            jimgr.setIcon(iconor);*/
+
+            //imagen frontal
+            String path = "/imagenes/m" + i + "f.jpg";
+
+            if (ImageUtil.class.getResource(path) != null) {
+                ImageIcon icof = new ImageIcon(getClass().getResource(path));
+                Icon iconof = new ImageIcon(icof.getImage().getScaledInstance(136, 102, Image.SCALE_DEFAULT));
+                jimgf.setIcon(iconof);
+            } else {
+                jimgf.setIcon(addcoin);
+            }
+            
+            //imagen reverso
+            path = "/imagenes/m" + i + "r.jpg";
+            
+            if (ImageUtil.class.getResource(path) != null) {
+                ImageIcon icor = new ImageIcon(getClass().getResource(path));
+                Icon iconor = new ImageIcon(icor.getImage().getScaledInstance(136, 102, Image.SCALE_DEFAULT));
+                jimgr.setIcon(iconor);
+            } else {
+                jimgr.setIcon(addcoin);
+            }
+                        
+            //imagen detall1
+            path = "/imagenes/m" + i + "d1.jpg";
+
+            if (ImageUtil.class.getResource(path) != null) {
+                ImageIcon ico3 = new ImageIcon(getClass().getResource(path));
+                Icon iconod1 = new ImageIcon(ico3.getImage().getScaledInstance(136, 102, Image.SCALE_DEFAULT));
+                jimgd1.setIcon(iconod1);
+            } else {
+                jimgd1.setIcon(addcoin);
+            }
+            
+            //imagen detalle2 
+            path = "/imagenes/m" + i + "d2.jpg";
+
+            if (ImageUtil.class.getResource(path) != null) {
+                ImageIcon icod2 = new ImageIcon(getClass().getResource(path));
+                Icon iconod2 = new ImageIcon(icod2.getImage().getScaledInstance(136, 102, Image.SCALE_DEFAULT));
+                jimgd2.setIcon(iconod2);
+            } else {
+                jimgd2.setIcon(addcoin);
+            }
             
             
+         
             
+
         } else {
             jLabel9.setText("");
             jLabel10.setText("");
-            jLabel11.setText(""); 
+            jLabel11.setText("");
         }
     }
 
@@ -129,9 +185,9 @@ public class MonedaPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
+        jimgd1 = new javax.swing.JLabel();
         jimgr = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        jimgd2 = new javax.swing.JLabel();
         jimgf = new javax.swing.JLabel();
         jnumtotal = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -291,25 +347,45 @@ public class MonedaPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel12.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel12.setPreferredSize(new java.awt.Dimension(140, 105));
+        jimgd1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jimgd1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jimgd1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jimgd1.setPreferredSize(new java.awt.Dimension(140, 105));
+        jimgd1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jimgd1MouseClicked(evt);
+            }
+        });
 
         jimgr.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jimgr.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jimgr.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jimgr.setPreferredSize(new java.awt.Dimension(140, 105));
+        jimgr.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jimgrMouseClicked(evt);
+            }
+        });
 
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel14.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel14.setPreferredSize(new java.awt.Dimension(140, 105));
+        jimgd2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jimgd2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jimgd2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jimgd2.setPreferredSize(new java.awt.Dimension(140, 105));
+        jimgd2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jimgd2MouseClicked(evt);
+            }
+        });
 
         jimgf.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jimgf.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jimgf.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jimgf.setPreferredSize(new java.awt.Dimension(140, 105));
+        jimgf.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jimgfMouseClicked(evt);
+            }
+        });
 
         jLabel16.setText("Numero:");
 
@@ -329,18 +405,18 @@ public class MonedaPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(4, 4, 4)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jimgd1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jimgf, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jimgr, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jimgd2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addGap(18, 18, 18)
                         .addComponent(jnumtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,8 +440,8 @@ public class MonedaPanel extends javax.swing.JPanel {
                             .addComponent(jimgf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jimgd1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jimgd2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(49, 49, 49))))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -377,17 +453,81 @@ public class MonedaPanel extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int numFilaSelec = jTable1.getSelectedRow();
         if (numFilaSelec != -1) {
-            int i = Integer.valueOf((String)modeloTabla.getValueAt(numFilaSelec, 0));
-        
-        MonedaDialogo MDialog = null;
-        
-        MDialog = new MonedaDialogo(null, true);
-        MDialog.AsignarMoneda(i);
-        MDialog.setVisible(true);
-        
-        
+            int i = Integer.valueOf((String) modeloTabla.getValueAt(numFilaSelec, 0));
+
+            MonedaDialogo MDialog = null;
+
+            MDialog = new MonedaDialogo(null, true);
+            MDialog.AsignarMoneda(i);
+            MDialog.setVisible(true);
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    //AL PULSAR UNA IMAGEN
+    private void jimgfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jimgfMouseClicked
+        //extraemos el id de la fila selecionada de la tabla
+        int numFilaSelec = jTable1.getSelectedRow();
+        if (numFilaSelec != -1) {
+            int i = Integer.valueOf((String) modeloTabla.getValueAt(numFilaSelec, 0));
+
+            //llamamos a la ventana imagendialogo
+            ImagenDialogo ImgDialog = null;
+            ImgDialog = new ImagenDialogo(null, true);
+            ImgDialog.AsignaImagen(i, "f");
+            ImgDialog.setVisible(true);
+
+
+            
+        }
+
+
+    }//GEN-LAST:event_jimgfMouseClicked
+
+    private void jimgrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jimgrMouseClicked
+        //extraemos el id de la fila selecionada de la tabla
+        int numFilaSelec = jTable1.getSelectedRow();
+        if (numFilaSelec != -1) {
+            int i = Integer.valueOf((String) modeloTabla.getValueAt(numFilaSelec, 0));
+
+            //llamamos a la ventana imagendialogo
+            ImagenDialogo ImgDialog = null;
+            ImgDialog = new ImagenDialogo(null, true);
+            ImgDialog.AsignaImagen(i, "r");
+            ImgDialog.setVisible(true);
+
+        }
+    }//GEN-LAST:event_jimgrMouseClicked
+
+    private void jimgd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jimgd1MouseClicked
+        //extraemos el id de la fila selecionada de la tabla
+        int numFilaSelec = jTable1.getSelectedRow();
+        if (numFilaSelec != -1) {
+            int i = Integer.valueOf((String) modeloTabla.getValueAt(numFilaSelec, 0));
+
+            //llamamos a la ventana imagendialogo
+            ImagenDialogo ImgDialog = null;
+            ImgDialog = new ImagenDialogo(null, true);
+            ImgDialog.AsignaImagen(i, "d1");
+            ImgDialog.setVisible(true);
+
+        }
+    }//GEN-LAST:event_jimgd1MouseClicked
+
+    private void jimgd2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jimgd2MouseClicked
+                //extraemos el id de la fila selecionada de la tabla
+        int numFilaSelec = jTable1.getSelectedRow();
+        if (numFilaSelec != -1) {
+            int i = Integer.valueOf((String) modeloTabla.getValueAt(numFilaSelec, 0));
+
+            //llamamos a la ventana imagendialogo
+            ImagenDialogo ImgDialog = null;
+            ImgDialog = new ImagenDialogo(null, true);
+            ImgDialog.AsignaImagen(i, "d2");
+            ImgDialog.setVisible(true);
+
+        }
+    }//GEN-LAST:event_jimgd2MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -398,8 +538,6 @@ public class MonedaPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -414,6 +552,8 @@ public class MonedaPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jimgd1;
+    private javax.swing.JLabel jimgd2;
     private javax.swing.JLabel jimgf;
     private javax.swing.JLabel jimgr;
     private javax.swing.JLabel jnumtotal;
